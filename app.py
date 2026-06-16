@@ -28,8 +28,9 @@ def predict():
     features = np.array([[Year, rain_fall, avg, pressure, Area, Item]])
     transformed_features = preprocessor.transform(features)
     result = model.predict(transformed_features).reshape(1, -1)
-
-    return render_template("index.html", prediction_text=f"Predicted {Item} yield in {Area} {Year} is {result[0][0]:.2f} hg/ha_yield")
+    prediction_quintal_per_acr = result[0][0] / 2471
+    
+    return render_template("index.html", prediction_text=f"Predicted {Item} yield in {Area} {Year} is {prediction_quintal_per_acr:.2f} quintals/acre")
 
 if __name__ == "__main__":
     app.run(debug=True)
